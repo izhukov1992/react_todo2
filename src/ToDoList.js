@@ -11,11 +11,18 @@ class ToDoList extends React.Component {
     }
 
     this.addTask = this.addTask.bind(this)
+    this.deleteTask = this.deleteTask.bind(this)
   }
 
   addTask(task) {
     this.setState({
       tasks: [...this.state.tasks, task]
+    });
+  }
+
+  deleteTask(id) {
+    this.setState({
+      tasks: this.state.tasks.filter(task => task._id !== id)
     });
   }
 
@@ -35,9 +42,9 @@ class ToDoList extends React.Component {
         <h1>{this.props.name}:</h1>
         <ul>
           {
-            this.state.tasks.map(
-              function(task) {
-                return <ToDoTask key={task._id} _id={task._id} name={task.task_name} done={task.done} />
+            this.state.tasks.map(task => {
+                return <ToDoTask key={task._id} _id={task._id} name={task.task_name} done={task.done}
+                                 onTaskDelete={this.deleteTask} />
               }
             )
           }
